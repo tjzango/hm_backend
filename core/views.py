@@ -4,7 +4,8 @@ from rest_framework import status
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from random import choice, sample
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
+
 from .models import (
     LandingContent, VideoSection, SpeechContent, SpokenWord,
     MinistryBrand, PhotoGallery, PressReleaseContent, SpeechContent, WriteUpContent,
@@ -14,8 +15,12 @@ from .serializers import (
     LandingContentSerializer, VideoSectionSerializer, SpeechContentSerializer,
     SpokenWordSerializer, MinistryBrandSerializer, PhotoGallerySerializer, PressReleaseContentSerializer, SpeechContentSerializer,
     WriteUpContentSerializer, PublicationSerializer,
-    SpokenWordSerializer, AboutSectionSerializer
+    SpokenWordSerializer, AboutSectionSerializer, PublicationDetailSerializer
 )
+from .serializers import PublicationSummarySerializer
+from datetime import datetime
+from rest_framework.filters import OrderingFilter
+
 
 class HomepageAPIView(APIView):
     def get(self, request):
@@ -62,9 +67,24 @@ class WriteUpContentListView(ListAPIView):
     queryset = WriteUpContent.objects.all().order_by('-id')
     serializer_class = WriteUpContentSerializer
 
+
 class PublicationListView(ListAPIView):
-    queryset = Publication.objects.all().order_by('-date')
-    serializer_class = PublicationSerializer
+    serializer_class = PublicationSummarySerializer
+    filter_backends = [OrderingFilter]
+    ordering = ['-date']  
+
+    def get_queryset(self):
+        year = self.request.query_params.get('year', datetime.now().year)
+        return Publication.objects.filter(date__year=year).order_by('-date')
+    
+
+
+
+
+class PublicationDetailView(RetrieveAPIView):
+    queryset = Publication.objects.all()
+    serializer_class = PublicationDetailSerializer
+
 
 class SpokenWordListView(ListAPIView):
     queryset = SpokenWord.objects.all().order_by('-date')

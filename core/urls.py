@@ -7,6 +7,7 @@ urlpatterns = [
     path('speeches/', views.SpeechContentListView.as_view(), name='speech-list'),
     path('writeups/', views.WriteUpContentListView.as_view(), name='writeup-list'),
     path('publications/', views.PublicationListView.as_view(), name='publication-list'),
+    path('publications/<int:pk>/', views.PublicationDetailView.as_view(), name='publication-detail'),
     path('spokenwords/', views.SpokenWordListView.as_view(), name='spokenword-list'),
     path('about/', views.AboutSectionListView.as_view(), name='about-section-list'),
 ]
