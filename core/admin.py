@@ -5,6 +5,8 @@ from .models import (
     SpokenWordsCat, SpokenWord, AboutSection
 )
 
+
+
 class VideoSectionInline(admin.TabularInline):
     model = VideoSection
     extra = 1

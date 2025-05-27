@@ -1,40 +1,68 @@
 from rest_framework import serializers
 from .models import (
-    LandingContent, VideoSection, Publication, SpokenWord,
-    MinistryBrand, PhotoGallery
+    LandingContent, VideoSection, SpeechContent, SpokenWord,
+    MinistryBrand, PhotoGallery, PressReleaseContent, SpeechContent, WriteUpContent,
+    Publication, SpokenWord, AboutSection
 )
 
 class LandingContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = LandingContent
-        fields = ['landing_image', 'spoken_Landing', 'memorable_quote']
+        fields = '__all__'
 
 class VideoSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoSection
-        fields = ['title', 'video_path', 'date']
+        fields = '__all__'
 
-class PublicationSerializer(serializers.ModelSerializer):
-    short_content = serializers.SerializerMethodField()
-
+class SpeechContentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Publication
-        fields = ['category', 'title', 'date', 'landing_image', 'short_content']
-
-    def get_short_content(self, obj):
-        return obj.content[:110] + "..." if len(obj.content) > 110 else obj.content
+        model = SpeechContent
+        fields = '__all__'
 
 class SpokenWordSerializer(serializers.ModelSerializer):
     class Meta:
         model = SpokenWord
-        fields = ['title', 'landing_image', 'main_image', 'date', 'content']
+        fields = '__all__'
 
 class MinistryBrandSerializer(serializers.ModelSerializer):
     class Meta:
         model = MinistryBrand
-        fields = ['name', 'image_path']
+        fields = '__all__'
 
 class PhotoGallerySerializer(serializers.ModelSerializer):
     class Meta:
         model = PhotoGallery
-        fields = ['image', 'uploaded_at']
+        fields = '__all__'
+
+
+
+class PressReleaseContentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PressReleaseContent
+        fields = '__all__'
+
+class SpeechContentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SpeechContent
+        fields = '__all__'
+
+class WriteUpContentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WriteUpContent
+        fields = '__all__'
+
+class PublicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Publication
+        fields = '__all__'
+
+class SpokenWordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SpokenWord
+        fields = '__all__'
+
+class AboutSectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AboutSection
+        fields = '__all__'
